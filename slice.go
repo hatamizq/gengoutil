@@ -59,7 +59,7 @@ func compareValues(fieldI, fieldJ reflect.Value, order SortOrder) bool {
 	}
 	switch fieldI.Kind() {
 	case reflect.Int, reflect.Int32, reflect.Int64, reflect.Float64, reflect.Float32:
-		if order == DescendingSort {
+		if order == AscendingSort {
 			return fieldI.Int() < fieldJ.Int()
 		}
 		return fieldI.Int() > fieldJ.Int()

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 )
 
 // check whether map has any key or not
@@ -47,6 +48,11 @@ func MapAnyToType[T any](input map[string]interface{}) map[string]T {
 
 // convert struct into map[string]any
 func StructToMapAny(i any) (map[string]any, error) {
+	elemType := reflect.TypeOf(i)
+	if elemType.Kind() != reflect.Struct {
+		return nil, errors.New("element must be a struct")
+	}
+
 	data, jsonErr := json.Marshal(i)
 	if jsonErr != nil {
 		return nil, errors.New(jsonErr.Error())

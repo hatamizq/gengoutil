@@ -21,3 +21,17 @@ func (c *ContextWithoutDeadline) Value(key interface{}) interface{} {
 func NewContextWithoutDeadline(ctx context.Context) context.Context {
 	return &ContextWithoutDeadline{ctx}
 }
+
+func GetContextValue[T any](ctx context.Context, key string) T {
+	value := ctx.Value(key)
+
+	if value == nil {
+		return ZeroOf[T]()
+	}
+
+	parsedValue, ok := value.(T)
+	if !ok {
+		return ZeroOf[T]()
+	}
+	return parsedValue
+}
